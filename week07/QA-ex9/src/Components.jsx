@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { Badge, Button, Col, Form, Row, Table } from "react-bootstrap";
 
 function QuestionWithAnswers(props) {
 
-    //here we handle the hooks inserted before inside the props to manage the several objects state
     const q = props.question;
-    const answers = props.answers ;
+    const answers = props.answers;
 
     if (q) {
         return (<>
@@ -33,6 +33,34 @@ function QuestionDetails(props) {
 }
 
 function AnswerDetails(props) {
+
+    const [sorted, setSorted] = useState('');
+
+    function updateSortState() {
+        setSorted((old) => {
+            if (old === '')
+                return 'up'
+            else if (old === 'up')
+                return 'down'
+            else if (old === 'down')
+                return ''
+        })
+    }
+
+    let sortSymbol = '';
+    switch (sorted) {
+        case '':
+            sortSymbol = '=';
+            break;
+        case 'up':
+            sortSymbol = '^';
+            break;
+        case 'down':
+            sortSymbol = 'v';
+            break;
+    }
+
+
     return <>
         <h2>Answers:</h2>
         <Table hover>
@@ -41,7 +69,7 @@ function AnswerDetails(props) {
                     <th scope="col">Date</th>
                     <th scope="col">Text</th>
                     <th scope="col">Author</th>
-                    <th scope="col">Score</th>
+                    <th scope="col" onClick={updateSortState}>Score {sortSymbol}</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -56,16 +84,13 @@ function AnswerDetails(props) {
 }
 
 function AnswerRow(props) {
-    //we add button hook functionalities below
-    //the button callback in onClick call the upVoteAnswer wrapper function or the deleteAnswer function 
-    //you find these functions in App.jsx
     return <tr>
         <td>{props.answer.date.format('DD/MM/YYYY')}</td>
         <td>{props.answer.text}</td>
         <td>{props.answer.author}</td>
         <td>{props.answer.score}</td>
-        <td><Button variant='secondary' onClick={()=>{props.upVoteAnswer(props.answer.id)}}>VOTE</Button>{' '}
-        <Button variant='warning' onClick={()=>{props.deleteAnswer(props.answer.id)}}>DELETE</Button></td>
+        <td><Button variant='secondary' onClick={() => { props.upVoteAnswer(props.answer.id) }}>VOTE</Button>{' '}
+            <Button variant='warning' onClick={() => { props.deleteAnswer(props.answer.id) }}>DELETE</Button></td>
     </tr>
 }
 
@@ -88,10 +113,10 @@ function NewAnswerForm(props) {
 
         <td></td>
         <td><Form.Group controlId="addButton">
-        <Form.Label className='fw-light'>&nbsp;</Form.Label><br/>
+            <Form.Label className='fw-light'>&nbsp;</Form.Label><br />
             <Button variant='success' id="addbutton">ADD</Button>
-            </Form.Group>
-            </td>
+        </Form.Group>
+        </td>
     </tr>;
 }
 
