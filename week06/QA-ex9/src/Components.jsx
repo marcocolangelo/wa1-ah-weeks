@@ -1,5 +1,4 @@
 import { Badge, Button, Col, Form, Row, Table } from "react-bootstrap";
-import { TestInput } from "./testInput";
 
 function QuestionWithAnswers(props) {
 
@@ -34,54 +33,6 @@ function QuestionDetails(props) {
 }
 
 function AnswerDetails(props) {
-
-    const [sorted,setSorted] = useState(false);
-
-    //LOCAL COMPUTATION => sorting an array on display is a visualization problem so it's possible to manage it LOCALLY
-    //so directly inside the interested component not necessary inside the parent node
-    //but here we have a static implementation which doesn't manage possible changes in the properties during the webpage execution
-    //so props changing doesn't trigger a NEW RENDER which would make the display change
-
-    //hence we have to implement a little logic to update the STATE with sortByScore function and force the re-rendering of the component
-    
-    let sortedAnswers = [...props.answer];
-    let sortSymbol = "N";
-
-    if (sorted == 'up'){
-        sortedAnswers.sort((a,b) => (a.score - b.score));
-        sortSymbol = "U";
-    }else if (sorted == 'down'){
-        sortedAnswers.sort((a,b) => -(a.score - b.score));
-        sortSymbol = "D";
-    }
-
-    //logic to change the state and re-render the component thanks to hook implementation
-    function sortByScore () {
-        if (sorted=='none'){
-            setSorted('up');
-            
-        }
-        else if (sorted == 'up'){
-            setSorted('down');
-            
-        }
-        else if (sorted == 'down'){
-            setSorted('none');
-            
-        }
-
-    }
-
-    //DERIVED STATE - generally a bad idea
-    //in this way we take a snapshot of props conditions at this time but so the state doesn't change in case of props changing
-/*const [sortedAnswers,setSortedAnswers] = useState(props.answers); 
-    function sortByScore () {
-    setSortedAnswers((old) => {
-        let temp = [...old] 
-        temp.sort() 
-        return temp})
-    }*/
-
     return <>
         <h2>Answers:</h2>
         <Table hover>
@@ -90,8 +41,7 @@ function AnswerDetails(props) {
                     <th scope="col">Date</th>
                     <th scope="col">Text</th>
                     <th scope="col">Author</th>
-                    {/*implement sortByScore inside the Score button to force the new state and re-render the component */}
-                    <th scope="col" onClick={sortByScore}> Score {sortSymbol}</th>
+                    <th scope="col">Score</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -100,10 +50,8 @@ function AnswerDetails(props) {
             </tbody>
             <tfoot>
                 <NewAnswerForm />
-
             </tfoot>
         </Table>
-        <TestInput/>
     </>
 }
 
