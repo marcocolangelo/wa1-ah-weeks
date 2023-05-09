@@ -55,8 +55,7 @@ function App() {
     </header>
     <main>
       <Container>
-        <QuestionWithAnswers question={question} answers={answers}
-          deleteAnswer={deleteAnswer} upVoteAnswer={upVoteAnswer} />
+        
       </Container>
     </main>
   </>

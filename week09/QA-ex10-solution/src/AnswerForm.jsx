@@ -60,6 +60,8 @@ function AddOrEditAnswer(props) {
 export {AddOrEditAnswer}
 
 
+//this should be a sort of rpevious version of AddOrEdit form
+
 function NewAnswerForm(props) {
     return <tr>
         <td><Form.Group controlId="answerDate">

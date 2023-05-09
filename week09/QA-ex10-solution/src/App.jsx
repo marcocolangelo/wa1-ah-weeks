@@ -56,7 +56,8 @@ function App() {
   }
 
 
-
+//path='*' corresponds to a sort of switch default option 
+//with :idQuestion Route should recognize the correct integer which stands for idQuestion in the URL
 
   return <BrowserRouter>
     <Routes>
@@ -77,6 +78,8 @@ function App() {
 
 function MainLayout() {
   const { idQuestion } = useParams();
+//look at how we use Outler to specify there are nested elements inside MainLayout() (like QuestionList ,AnswerList, AddAnswer and EditAnswer)
+//and that they must be placed into this specific position (inside the last Container in this case)
   return <>
     <header>
       <Navbar sticky="top" variant='dark' bg="primary" expand="lg" className='mb-3'>

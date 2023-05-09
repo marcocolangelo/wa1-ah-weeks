@@ -4,10 +4,14 @@ import { AddOrEditAnswer } from "./AnswerForm";
 
 function QuestionWithAnswers(props) {
 
+    //hook to manage the mode from view to edit or add
     const [mode, setMode] = useState('view');
 
     const [editedAnswer, setEditedAnswer] = useState(false);
 
+    //you can find all the handle functions below to manage the state changing
+    //and they are linked to those ones coming from App.jsx which emulate qa.js functionalities
+    //like addAnswer, editAnswer and so more
     function handleCancel() {
         setMode('view');
     }
@@ -29,10 +33,13 @@ function QuestionWithAnswers(props) {
     const q = props.question;
     const answers = props.answers;
 
+    //below all the button to change the mode and the interface to introduce adds or deletes
+    //of course the button change to ADD mode only if the initial value is view
     if (q) {
         return (<>
             <QuestionDetails author={q.author} text={q.text} />
             <AnswerDetails answers={answers} deleteAnswer={props.deleteAnswer} upVoteAnswer={props.upVoteAnswer} handleEdit={handleEdit} />
+            {/* only with edit or add mode the AddOrEditAnswer interface will appear*/}
             {mode === 'edit' && <AddOrEditAnswer mode={mode} handleCancel={handleCancel} handleSave={handleSave} initialValue={editedAnswer} />}
             {mode === 'add' && <AddOrEditAnswer mode={mode} handleCancel={handleCancel} handleAdd={handleAdd} />}
             {mode === 'view' && <Button variant='success' onClick={() => setMode('add')}>ADD</Button>}
@@ -113,6 +120,7 @@ function AnswerDetails(props) {
     </>
 }
 
+//so now AnswerRow inside the table will be able to change the window mode through the buttons
 function AnswerRow(props) {
     return <tr>
         <td>{props.answer.date.format('DD/MM/YYYY')}</td>

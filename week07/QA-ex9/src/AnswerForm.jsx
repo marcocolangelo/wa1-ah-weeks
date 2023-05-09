@@ -4,6 +4,15 @@ import {Form, Button} from 'react-bootstrap';
 
 function AddOrEditAnswer(props) {
 
+    //hooks to manage the answer's date,text and author states
+    //remember to initialize the defualt value inside hooks or this will be defined and the object will consider as UNCONTROLLED
+    //(in contrapposition to CONTROLLED REACT OBJECTS )
+
+    //we initialized the form with a initialValue passed by the parent thorugh props
+    //this allow us to save uncommitted changes inside the interface
+   
+   //conditional initialization to take info from the yet present answer in case we would edit them
+   //so the edit interface will filled by the actual info 
     const [date, setDate] = useState(
         props.mode==='edit' ? props.initialValue.date.format('YYYY-MM-DD') :
         dayjs().format('YYYY-MM-DD')) ;
@@ -12,12 +21,19 @@ function AddOrEditAnswer(props) {
     const [author, setAuthor] = useState(
         props.mode==='edit' ? props.initialValue.author :'') ;
 
+    //here an error managing too using hooks
     const [err, setErr] = useState('')
 
+    //the AnswerForm handleAdd is different from handleAdd specificed in Components by the parent QuestionWithAnswer
+    //and passed as AnswerForm props
+
+    //here the functions are used to validate data or the throw errors
     function handleAdd() {
+        
         if(text!=='' && author!=='') {
             props.handleAdd(date, text, author);
         } else {
+            //look at how errors are managed using hooks so we have to adopt setEtt to set err=errValue
             setErr('Some data are missing') ;
         }
     }
@@ -31,6 +47,7 @@ function AddOrEditAnswer(props) {
     }
 
     return <div>
+        {/*the error message appears only in case of errors */}
         {err && <p>{err}</p>}
 
             <Form.Group controlId="answerDate">
@@ -50,8 +67,10 @@ function AddOrEditAnswer(props) {
 
         <Form.Group controlId="addButton">
             <Form.Label className='fw-light'>&nbsp;</Form.Label><br />
+            {/*only in edd add and edit mode the tow buttonw will show up */}
             {props.mode==='add' && <Button variant='success' id="addbutton" onClick={handleAdd}>ADD</Button>}
             {props.mode==='edit' && <Button variant='success' id="addbutton" onClick={handleSave}>SAVE</Button>}
+            {/**but the cancel button will be present anyway */}
             {' '}<Button variant='secondary' id="addbutton" onClick={props.handleCancel}>CANCEL</Button>
         </Form.Group>
     </div>

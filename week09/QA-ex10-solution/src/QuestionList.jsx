@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Card, CardGroup } from 'react-bootstrap';
 
+//here we can select the wanted question from a question list -> clicking on the button you are redirected to the specifif /answers/a_id page
+//we use a prop.questions.map to iterate and make dynamic this operation over all the questions passed through props
 function QuestionList(props) {
     return <CardGroup>
         {props.questions.map((q) => (

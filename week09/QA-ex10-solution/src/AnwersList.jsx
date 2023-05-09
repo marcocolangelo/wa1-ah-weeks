@@ -4,6 +4,11 @@ import { Row, Col, Badge, Table } from "react-bootstrap";
 import { useState } from "react";
 
 function AnswersList(props) {
+
+    //useParams() is a specific hook which doesn't need any argument and extracts autom. parameters 
+    //from the ROUTER definition in the URL(here the id after localhost/answers)
+
+    //useNavigate return a function which I can use to navigate over the several URLs
     const { idQuestion } = useParams();
     const navigate = useNavigate();
 

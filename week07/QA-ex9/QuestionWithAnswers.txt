@@ -20,21 +20,24 @@ App
         AddOrEditAnswer
 
         
+We define different kind of mode to choose if adding or editing our table
 
+#In 'view' mode we don't see the ADD interface neither the DELETE button
 mode='view' (default)
 [ Question info ]
 [ Table of answers ]
     [Buttons in each row "EDIT"] -> mode='edit'
 [ Button "ADD" ] -> mode='add'
 
-'add'
+#we have the ADD button to trigger the ADD interface and so the mode 'add'
+mode='add'
 [ Question info ]
 ??[ Table of answers ]??
 [ Empty FORM for new answer ]
     [ Button ADD ] -> save answer (into App state), mode='view'
     [ Button CANCEL ] -> mode='view'
 
-'edit'
+mode='edit'
 [ Question info ]
 ??[ Table of answers ]??
 [ Pre-filled FORM for editing an answer ]
