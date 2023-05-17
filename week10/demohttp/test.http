@@ -7,8 +7,10 @@ GET http://localhost:3000/abc HTTP/1.1
 ###
 
 POST http://localhost:3000/add/7 HTTP/1.1
+#you can chose the content type of the body in the request
 Content-Type: application/json
-
+#this below is the body to send in the request packet
+//remember to use always double-quote "" in JSON
 { "id": 3, "name": "abc" }
 
 ###

@@ -59,6 +59,9 @@ function App() {
 //path='*' corresponds to a sort of switch default option 
 //with :idQuestion Route should recognize the correct integer which stands for idQuestion in the URL
 
+//element shows the element to route
+//index is the route showed when the PARENT PATH is called without any other child routes (so just '/')
+
   return <BrowserRouter>
     <Routes>
       <Route element={<MainLayout />}>
@@ -78,7 +81,7 @@ function App() {
 
 function MainLayout() {
   const { idQuestion } = useParams();
-//look at how we use Outler to specify there are nested elements inside MainLayout() (like QuestionList ,AnswerList, AddAnswer and EditAnswer)
+//look at how we use Outlet to specify there are nested elements inside MainLayout() (like QuestionList ,AnswerList, AddAnswer and EditAnswer)
 //and that they must be placed into this specific position (inside the last Container in this case)
   return <>
     <header>
