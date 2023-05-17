@@ -1,16 +1,14 @@
 'use strict';
 import dayjs from 'dayjs';
 
-function Answer(id, text, author, score, date) {
-    this.id = id ;
+function Answer(text, author, score, date) {
     this.text = text ;
     this.author = author ;
     this.score = score ;
     this.date = dayjs(date) ;
 }
 
-function Question(id, text, author, date) {
-    this.id = id ;
+function Question(text, author, date) {
     this.text = text ;
     this.author = author ;
     this.date = dayjs(date) ;
