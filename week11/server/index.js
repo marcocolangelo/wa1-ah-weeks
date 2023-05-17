@@ -2,60 +2,47 @@
 
 const PORT = 3000 ;
 
-//this will be the server side, the other one belongs to the client  
-
-const express = require('express') ;
-const morgan = require('morgan') ;
-
-const dao = require('./qa-dao') ;
-const {Question, Answer} = require('./qa') ;
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const dao = require('./qa-dao');
+const { Question, Answer } = require('./qa');
 
 const app = express();
 app.use(morgan('combined'));
 app.use(express.json());
+app.use(cors());
 
 app.post('/api/questions', (req, res) => {
     // console.log(req.body)
-    //we have createQuestion from qa_dao.js
-    //id in Question is null because it''l not be used anyway
-    //because real id will be assigned by the system
-    const question = new Question(null, req.body.text, req.body.author, req.body.date) ;
-    dao.createQuestion(question).then((result)=>{
-        //nothing to tell you if all goes okay
-        res.end() ;
-    }).catch((error)=>{
-        //send an error msg if something goes wrong
-        res.status(500).send(error) ;
+    const question = new Question(null, req.body.text, req.body.author, req.body.date);
+    dao.createQuestion(question).then((result) => {
+        res.end();
+    }).catch((error) => {
+        res.status(500).send(error.message);
     })
 })
 
-
-//get the list of all questions with full details
-app.get('/api/questions', (req, res)=>{
-    //we have the right JS function yet, it's listAnswers(questionId)
-    //from qa_dao.js
-    dao.listQuestions().then((result)=>{
-        //it sends a JSON of the result
-        res.json(result) ;
-    }).catch((error)=>{
-        res.status(500).send(error) ;
+app.get('/api/questions', (req, res) => {
+    dao.listQuestions().then((result) => {
+        res.json(result);
+    }).catch((error) => {
+        res.status(500).send(error.message);
     })
 })
 
-//get list of all answers to a specific question
 app.get('/api/questions/:questionId/answers', async (req, res) => {
     const questionId = req.params.questionId;
-    
+
     try {
         const answers = await dao.listAnswers(questionId);
         res.json(answers);
     } catch (error) {
         res.status(500).send(error.message)
     }
-
 })
 
-//add a new answer to a specific question
+
 app.post('/api/questions/:questionId/answers', async (req, res) => {
     const questionId = req.params.questionId;
 
@@ -70,7 +57,6 @@ app.post('/api/questions/:questionId/answers', async (req, res) => {
     }
 })
 
-//delete a specific answer for a specific question
 app.delete('/api/answers/:answerId', async (req, res) => {
     const answerId = req.params.answerId ;
 
@@ -83,7 +69,6 @@ app.delete('/api/answers/:answerId', async (req, res) => {
 
 })
 
-//update the content od an existing answer
 app.put('/api/answers/:answerId', async (req, res) => {
     const answerId = req.params.answerId;
 
@@ -102,7 +87,6 @@ app.put('/api/answers/:answerId', async (req, res) => {
 
 })
 
-//vote an answer
 app.post('/api/answers/:answerId/vote', async (req, res) => {
     const answerId = req.params.answerId ;
 

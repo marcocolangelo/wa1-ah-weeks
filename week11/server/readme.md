@@ -26,9 +26,8 @@ Create a new answer and add it to a specific question
 Delete an answer from a question
 
     DELETE /answers/:answerId
-        and the answerId should be unique also if from answers of different questions
 
-    DELETE /questions/:questionId/answers/:answerId  -- overkill -> so many param, the first solution could be the favourite one
+    DELETE /questions/:questionId/answers/:answerId  -- overkill
 
 Update the content of an existing answer (keeping it in the same question)
 
@@ -36,14 +35,14 @@ Update the content of an existing answer (keeping it in the same question)
     Request body: an Answer object
     (id, score, question id will not be modified)
 
-Vote an answer
+Vote an anwer
 
-    NO: CREATES A RACE CONDITION if we have >=2 concurrent clients (so if 2 voting the same at the same time)
+    NO: CREATES A RACE CONDITION if we have >=2 concurrent clients
     PUT /answers/:answerId/score
     Request body: object containing new score
 
     POST /answers/:answerId/vote
-    Request body: "up" (or "down") -> to increment or decrement the yet existing vote, not to insert a new value
+    Request body: "up" (or "down")
 
 TYPES OF ENTITIES (in JSON)
 Question
