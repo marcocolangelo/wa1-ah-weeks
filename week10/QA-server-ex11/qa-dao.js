@@ -1,5 +1,7 @@
 'use strict';
 
+//DAO means "Data Access Object", an interface used to access to a specific database (questions.sqlite in this case)
+
 const { Question, Answer } = require('./qa');
 
 const dayjs = require('dayjs');

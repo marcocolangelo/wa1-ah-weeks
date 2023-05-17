@@ -1,6 +1,9 @@
 'use strict' ;
 
+//This is a DEMO in which we explored some express and morgan functionalities
+
 const express = require('express') ;
+
 //morgan for logging
 const morgan = require('morgan') ;
 
@@ -47,7 +50,7 @@ app.get('/info', (req,res)=>{
 
     const info = { name: 'xyz', values:[3,6,8]}
 
-    //it converts onjects into JSON and then it returns them
+    //it converts objects into JSON and then it returns them
     res.json(info) ;
 
 }) ;
