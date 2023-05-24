@@ -59,11 +59,14 @@ app.get('/api/questions/:questionId/answers', async (req, res) => {
 app.post('/api/questions/:questionId/answers', async (req, res) => {
     const questionId = req.params.questionId;
 
+    //we need to know what to insert into the answer to add in the db
+    //so we take all the infos from the request's body
     const bodyanswer = req.body;
     const answer = new Answer(undefined, bodyanswer.text, bodyanswer.author, undefined, bodyanswer.date, questionId);
 
     try {
         await dao.createAnswer(questionId, answer);
+        //no informations to be sent in response are needed (just okay or not)
         res.end();
     } catch (error) {
         res.status(500).send(error.message);
@@ -83,7 +86,7 @@ app.delete('/api/answers/:answerId', async (req, res) => {
 
 })
 
-//update the content od an existing answer
+//update the content of an existing answer
 app.put('/api/answers/:answerId', async (req, res) => {
     const answerId = req.params.answerId;
 

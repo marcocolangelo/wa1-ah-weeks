@@ -52,5 +52,64 @@ async function deleteAnswer(answerId) {
     }
 }
 
+async function upVote(answerId){
+    try{
+    //use a fetch to increase the vote in the database using a POST
+    //this trigger the route in index.js
+    const response  = await fetch(APIURL+`/answers/${answerId}/vote`, {
+        //second fetch's parameter is an object containing method, headers and body (if needed) of the request
+        method : 'POST',
+        headers : {
+            'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify({"vote":"up"}) //so i can send it as a string from a JSON object
+        
+    });
 
-export { listQuestions, listAnswers, deleteAnswer };
+    if (response.ok){
+        return true;
+    } else {
+        // if response is not OK because of application errors
+        const message = response.text() ;
+        throw new Error("Application error: "+ message) ;
+    }
+
+    //in case of network errors
+    }catch(err){
+        throw new Error("Network error:" + err.message);
+    }
+}
+
+async function addAnswer(date,text,author,idQuestion){
+    try{
+        //use a fetch to increase the vote in the database using a POST
+        //this trigger the route in index.js
+        const response  = await fetch(APIURL+`/questions/${idQuestion}/answers`, {
+            //second fetch's parameter is an object containing method, headers and body (if needed) of the request
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify({
+                "text": text,
+                "author": author,
+                "date": date //in this web app date is traited as a string
+            }) //so i can send it as a string from a JSON object
+            
+        });
+    
+        if (response.ok){
+            return true;
+        } else {
+            // if response is not OK because of application errors
+            const message = response.text() ;
+            throw new Error("Application error: "+ message) ;
+        }
+    
+        //in case of network errors
+        }catch(err){
+            throw new Error("Network error:" + err.message);
+        }
+}
+
+export { listQuestions, listAnswers, deleteAnswer, upVote,addAnswer };

@@ -8,10 +8,19 @@ const cors = require('cors');
 const dao = require('./qa-dao');
 const { Question, Answer } = require('./qa');
 
+//it allows me to add a delay which force React to wait for the fetch response from the server about the answerList
+//it fixs the problem which gave me errors when I asked for a specific answer putting its ID in the URI
+function delay(req,res,next){
+    //remember to set the callback so don't call next() directly
+    setTimeout(()=> next(),1000);
+}
+
+
 const app = express();
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(cors());
+app.use(delay); //add an extra latency (REMOVE ME LATER!)
 
 app.post('/api/questions', (req, res) => {
     // console.log(req.body)
@@ -92,6 +101,7 @@ app.post('/api/answers/:answerId/vote', async (req, res) => {
 
     const vote = req.body.vote ;
 
+    //it receives the string from a POST HTTP msg wich contains the a body with this state inside (see in API upVote) 
     if(vote==="up") {
         await dao.upVoteAnswer(answerId) ;
         const my_ans = await dao.readAnswer(answerId) ;
