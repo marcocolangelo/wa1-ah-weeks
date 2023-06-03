@@ -1,5 +1,6 @@
 import { Container, Navbar } from 'react-bootstrap';
 import { BrowserRouter, Link, Outlet, Route, Routes, useParams } from 'react-router-dom';
+import { Answer, Question } from "./qa";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from "react";
@@ -23,8 +24,10 @@ function App() {
     })
   }, []);
 
+  // if(questions.length==0)
+  // return "Loading..."
+
   return <BrowserRouter>
-  
     <Routes>
       <Route element={<MainLayout />}>
         <Route index element={<QuestionList questions={questions} />} />
@@ -36,9 +39,9 @@ function App() {
           element={<EditAnswer questions={questions} />} />
         <Route path='*' element={<PageNotFound />} />
       </Route>
-    </Routes> 
+    </Routes>
   </BrowserRouter>;
-  
+
 }
 
 function MainLayout() {
@@ -63,5 +66,4 @@ function MainLayout() {
   </>
 }
 
-
-export default App;
+export default App
