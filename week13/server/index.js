@@ -15,6 +15,7 @@ const LocalStrategy = require('passport-local');
 
 // import Dao and Data Model
 const dao = require('./qa-dao');
+//used to access to users' data during authentication
 const userdao = require('./user-dao');
 const { Question, Answer } = require('./qa');
 
@@ -22,8 +23,17 @@ const { Question, Answer } = require('./qa');
 const app = express();
 
 // Configure and register middlewares
+
+/*morgan è un logger di richieste HTTP per Node.js. In questo caso, morgan è configurato con l’opzione 'combined', 
+che indica che il logger utilizzerà il formato di log combinato Apache predefinito 
+per registrare le informazioni sulle richieste HTTP in arrivo.*/ 
 app.use(morgan('combined'));
+
 app.use(express.json());
+
+/*con CORS solo le richieste provenienti dall’origine http://localhost:5173 sono autorizzate ad accedere alle risorse del server. 
+Inoltre, l’opzione credentials: true indica che i cookie e le credenziali di autenticazione HTTP 
+possono essere inviati insieme alla richiesta.*/
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true,
@@ -31,6 +41,9 @@ app.use(cors({
 
 // see: https://expressjs.com/en/resources/middleware/session.html
 app.use(session({
+    //secret is used to generate the cookie
+    //resalve:false means that the sessions shouldn't be resaved again in the datastore if has not been modified during the request
+    //saveUninitialized: false means that the sessions shouldn't be saved in the datastore if it has not been initialized
     secret: 'xxxxyyyyzzz', resave: false, saveUninitialized: false
 }));
 
